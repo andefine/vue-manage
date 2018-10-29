@@ -1,15 +1,36 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home.vue'
+import Layout from '@/views/Layout.vue'
 
 Vue.use(Router)
+
+/** 
+ * Layout公用组件
+ */
 
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
-      component: Home
+      component: Layout
+    },
+    {
+      path: '/sale',
+      name: 'sale',
+      component: Layout,
+      children: [
+        {
+          path: 'container',
+          name: 'container',
+          component: () => import('@/views/sale/Container')
+        }
+      ]
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: () => import('@/views/Test')
     }
     // {
     //   path: '/about',

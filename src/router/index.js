@@ -4,7 +4,7 @@ import Layout from '@/views/Layout.vue'
 
 Vue.use(Router)
 
-/** 
+/**
  * Layout公用组件
  */
 

@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data () {
     return {
@@ -48,8 +50,10 @@ export default {
   },
   mounted () {
     this.getFullPath()
+    this.test()
   },
   methods: {
+    ...mapActions(['test']),
     getFullPath (path) {
       console.log(this)
     }

@@ -26,12 +26,12 @@ export default new Router({
           component: () => import('@/views/sale/Container')
         }
       ]
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: () => import('@/views/Test')
     }
+    // {
+    //   path: '/test',
+    //   name: 'test',
+    //   component: () => import('@/views/Test')
+    // }
     // {
     //   path: '/about',
     //   name: 'about',

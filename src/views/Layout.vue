@@ -15,6 +15,19 @@
       <el-header>头部</el-header>
       <el-main>
         <router-view/>
+        <div style="width:400px;">
+          <el-form label-width="100px">
+            <el-form-item label="账户名">
+              <el-input v-model="username" placeholder=""></el-input>
+            </el-form-item>
+            <el-form-item label="密码">
+              <el-input v-model="password" placeholder="" type="password"></el-input>
+            </el-form-item>
+            <el-form-item label="">
+              <el-button type="" @click="login">登录</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </el-main>
     </el-container>
 
@@ -23,10 +36,13 @@
 
 <script>
 import { mapActions } from 'vuex'
+import http from '../utils/http'
 
 export default {
   data () {
     return {
+      username: '',
+      password: '',
       asideList: [
         {
           title: '首页'
@@ -51,11 +67,62 @@ export default {
   mounted () {
     this.getFullPath()
     this.test()
+    this.login()
   },
   methods: {
     ...mapActions(['test']),
     getFullPath (path) {
       console.log(this)
+    },
+    login () {
+      // const username = this.username
+      // const password = this.password
+      const username = 'linglingke'
+      const password = 'Ling@2018'
+      return http.request({
+        // withCredentials: true,
+        url: 'https://pay.zijimedia.cc/admin/login.do',
+        method: 'POST',
+        withCredentials: true,
+        data: {
+          username: username,
+          password: password
+        },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Access-Control-Allow-Origin': '*'
+        },
+        transformRequest: [function (data) {
+          let ret = ''
+          for (let attr in data) {
+            ret += `${attr}=${data[attr]}&`
+          }
+          ret = ret.slice(0, ret.length - 1)
+          return ret
+        }]
+      }).then(() => {
+        return http.request({
+          url: 'https://pay.zijimedia.cc/admin/member.json'
+        })
+      }).catch(() => {
+        return http.request({
+          url: 'https://pay.zijimedia.cc/admin/member.json',
+          withCredentials: true
+        })
+      })
+    },
+    test () {
+      http.request({
+        url: 'https://pay.zijimedia.cc/box/by-device/T0009.json',
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        }
+      })
+
+      http.request({
+        url: 'https://pay.zijimedia.cc/box/T0009/status.json',
+        method: 'post'
+      })
     }
   }
 }
